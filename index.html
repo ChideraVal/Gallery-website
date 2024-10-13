@@ -5,6 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+        var OneSignal = window.OneSignal || [];
+        OneSignal.push(function () {
+            OneSignal.init({
+                appId: "4fcc438a-3f0a-4dbc-b59d-4d185994a301", // Replace with your OneSignal App ID
+                notifyButton: {
+                    enable: true, // Show the native notification prompt
+                },
+            });
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/OneSignalSDKWorker.js')
+                .then(function (registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch(function (error) {
+                    console.error('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+
     <title>Number Match</title>
     <link rel="stylesheet" href="index.css">
 </head>
@@ -63,27 +84,6 @@
             <button id="replay-button">Replay</button>
         </div>
     </div>
-
-    <script>
-        var OneSignal = window.OneSignal || [];
-        OneSignal.push(function () {
-            OneSignal.init({
-                appId: "4fcc438a-3f0a-4dbc-b59d-4d185994a301", // Replace with your OneSignal app ID
-                // Add any additional options you need here
-            });
-        });
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(function (registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                }).catch(function (error) {
-                    console.error('Service Worker registration failed:', error);
-                });
-        }
-
-    </script>
-
 
     <script>
 
