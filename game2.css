@@ -256,7 +256,7 @@ body {
         display: grid;
         grid-template-columns: repeat(4, 65px);
         margin: 20px auto;
-        /* border: 2px solid red; */
+        border: 2px solid red;
         gap: 7px;
     }
     
