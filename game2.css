@@ -254,14 +254,13 @@ body {
 @media (max-width: 500px) {
     #puzzle-board {
         display: grid;
-        grid-template-columns: repeat(4, 70px);
+        grid-template-columns: repeat(4, 72px);
         margin: 20px auto;
-        border: 2px solid red;
         gap: 7px;
     }
     
     .tile {
-        width: 70px;
-        height: 70px;
+        width: 72px;
+        height: 72px;
     }
 }
