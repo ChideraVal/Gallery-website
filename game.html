@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mune Royale</title>
+    <link rel="stylesheet" href="game2.css">
+</head>
+
+<body>
+    <div class="page">
+        <!-- <h1>8-Puzzle Game</h1> -->
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div class="info">
+            <div id="countdown">
+                <img src="hourglass_4189446.png" alt="" width="18" height="18">
+                <span id="countdown-value">600</span>s
+            </div>
+            <div id="score">
+                <img src="fire_7654108.png" alt="" width="18" height="18">
+                <span id="score-value">0</span>/15
+            </div>
+            <!-- <div id="score">Level: <span id="level-value">Easy</span></div> -->
+        </div>
+
+        <div class="puz">
+            <div id="puzzle-board">
+                <!-- Tiles will be generated here -->
+            </div>
+        </div>
+
+        <div class="power">
+            <div id="power-up-buttons">
+                <div class="pbox">
+                    <div id="shuffle-button" class="power-up-button">
+                        <img src="fire_7654108.png" alt="" width="23" height="23">
+                    </div>
+                </div>
+
+                <div class="pbox">
+                    <div id="add-time-button" class="power-up-button">
+                        <img src="target_8992467.png" alt="" width="23" height="23">
+                    </div>
+                    <p id="rem">2</p>
+                </div>
+
+                <div class="pbox">
+                    <div id="end-game-button" class="power-up-button">
+                        <img src="hourglass_4189446.png" alt="" width="23" height="23">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+            document.oncontextmenu = () => {
+                return false;
+            }
+            document.addEventListener("DOMContentLoaded", () => {
+                const board = document.getElementById("puzzle-board");
+                const progressBar = document.getElementById("progress-bar");
+                const countdownValue = document.getElementById("countdown-value");
+                const scoreValue = document.getElementById("score-value");
+                const levelValue = document.getElementById("level-value");
+
+                const shuffleButton = document.getElementById("shuffle-button");
+                const addTimeButton = document.getElementById("add-time-button");
+                const endGameButton = document.getElementById("end-game-button");
+                const remText = document.getElementById("rem");
+
+                const gridSize = 4;
+                const tiles = [...Array(gridSize * gridSize - 1).keys()].map(i => i + 1);
+
+                tiles.push(null); // Represent the empty space
+                let shuffledTiles;
+                let timeLimit = 60 * 10; // Initial time limit in seconds
+                let timerInterval;
+                let score = 0;
+                let progress = 100;
+                let chancesRemaining = 2; // Number of chances for using the "Add 5 Seconds" power-up
+
+                // Helper function to shuffle the tiles with no tiles in their right position
+                function shuffleTilesNoRightPosition(array) {
+                    const shuffledArray = [...array];
+                    do {
+                        for (let i = shuffledArray.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+                        }
+                    } while (isAnyInRightPosition(shuffledArray));
+                    return shuffledArray;
+                }
+
+                // Function to check if any tile is in its right position
+                function isAnyInRightPosition(array) {
+                    for (let i = 0; i < array.length - 1; i++) {
+                        if (array[i] === i + 1) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                // Initialize the puzzle board with tiles not in their right positions
+                shuffledTiles = shuffleTilesNoRightPosition([...tiles]);
+
+                // Function to render the puzzle board
+                function renderBoard() {
+                    board.innerHTML = "";
+                    shuffledTiles.forEach((tile) => {
+                        const tileElement = document.createElement("div");
+                        tileElement.classList.add("tile");
+                        tileElement.textContent = tile === null ? "" : tile.toString();
+                        if (tile === null) {
+                            tileElement.style.backgroundColor = '#000';
+                        }
+                        tileElement.addEventListener("click", () => handleTileClick(tile));
+                        board.appendChild(tileElement);
+                    });
+                    // Update the progress bar
+                    // progressBar.style.width = "100%";
+                }
+
+                // Function to handle tile click events
+                function handleTileClick(tile) {
+                    const tileIndex = shuffledTiles.indexOf(tile);
+                    const emptyIndex = shuffledTiles.indexOf(null);
+                    if (isAdjacent(tileIndex, emptyIndex)) {
+                        shuffledTiles[tileIndex] = null;
+                        shuffledTiles[emptyIndex] = tile;
+                        renderBoard();
+                        if (checkWin()) {
+                            // Player wins
+                            // score += 1;
+                            // scoreValue.textContent = score;
+                            clearInterval(timerInterval);
+                            // alert("Congratulations! You won!");
+                            // resetGame();
+                            endGame();
+                        }
+                        // Calculate the new win percentage based on tiles in their correct positions
+                        const correctOrderCount = tiles.reduce((count, tile, index) => {
+                            return count + (tile === shuffledTiles[index] && tile !== null ? 1 : 0);
+                        }, 0);
+                        scoreValue.textContent = correctOrderCount;
+                    }
+                }
+
+                // Function to handle the "Shuffle" power-up button click
+                function useShufflePowerUp() {
+                    // Add your shuffle logic here...
+                    // For example, you can shuffle the tiles and render the board
+                    shuffledTiles = shuffleTilesNoRightPosition([...tiles]);
+                    scoreValue.textContent = '0';
+                    renderBoard();
+                }
+
+                // Function to handle the "Add 5 Seconds" power-up button click
+                function useAddTimePowerUp() {
+                    if (chancesRemaining > 0) {
+                        // Calculate the remaining time to be added
+                        progress = Math.min(progress + (100 / timeLimit) * 60, 100);
+
+                        // Update the progress bar and countdown
+                        progressBar.style.width = progress + "%";
+                        countdownValue.textContent = Math.ceil(progress / (100 / timeLimit));
+
+                        // Decrement chances remaining
+                        chancesRemaining--;
+
+                        // Update the chances display
+                        updateChancesDisplay();
+                    }
+                }
+
+                function endGame() {
+                    // open(`/result/${score}/`, '_parent');
+                    open(`result.html`, '_parent');
+                }
+
+                // Update the display of remaining chances
+                function updateChancesDisplay() {
+                    // addTimeButton.textContent = `Add 5 Seconds (${chancesRemaining} left)`;
+                    remText.textContent = `${chancesRemaining}`;
+                }
+
+                // Add event listeners for power-up buttons
+                shuffleButton.addEventListener("click", useShufflePowerUp);
+                addTimeButton.addEventListener("click", useAddTimePowerUp);
+                endGameButton.addEventListener("click", endGame);
+
+                // Helper function to check if two tiles are adjacent
+                function isAdjacent(index1, index2) {
+                    const row1 = Math.floor(index1 / gridSize);
+                    const col1 = index1 % gridSize;
+                    const row2 = Math.floor(index2 / gridSize);
+                    const col2 = index2 % gridSize;
+                    const rowDiff = Math.abs(row1 - row2);
+                    const colDiff = Math.abs(col1 - col2);
+                    return (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
+                }
+
+                // Function to check if the user has won
+                function checkWin() {
+                    for (let i = 0; i < tiles.length - 1; i++) {
+                        if (shuffledTiles[i] !== i + 1) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                // Function to handle the timer
+                function startTimer() {
+                    progress = 100;
+                    timerInterval = setInterval(() => {
+                        progress -= 100 / timeLimit;
+                        // console.log(progress)
+                        progressBar.style.width = progress + "%";
+                        countdownValue.textContent = Math.ceil(progress / (100 / timeLimit));
+                        if (progress <= 0) {
+                            clearInterval(timerInterval);
+                            // alert("Time's up! Game over.");
+                            open(`/result/${score}/`, '_parent');
+                            // resetGame();
+                        }
+                    }, 1000);
+                }
+
+                // Function to reset the game
+                function resetGame() {
+                    clearInterval(timerInterval);
+                    // Reset shuffledTiles, progress bar, and render the board
+                    shuffledTiles = shuffleTilesNoRightPosition([...tiles]);
+                    renderBoard();
+                    progressBar.style.width = "100%";
+                    countdownValue.textContent = timeLimit;
+                    // Reset chances for using "Add 5 Seconds" power-up
+                    chancesRemaining = 2;
+                    updateChancesDisplay();
+                    // Adjust time limit based on the score
+                    if (score > 10 && score < 25) {
+                        timeLimit = 30;
+                    } else if (score >= 25) {
+                        timeLimit = 25;
+                    } else {
+                        timeLimit = 40;
+                    }
+                    countdownValue.textContent = timeLimit;
+                    levelValue.textContent = timeLimit === 40 ? 'Easy' : timeLimit === 30 ? 'Medium' : 'Hard';
+                    // Restart the timer
+                    startTimer();
+                }
+
+                // Initialize the puzzle board and start the timer
+                renderBoard();
+                startTimer();
+            });
+        </script>
+</body>
+
+</html>
