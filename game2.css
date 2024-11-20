@@ -250,3 +250,18 @@ body {
         height: 2em;
     } */
 }
+
+@media (max-width: 400px) {
+    #puzzle-board {
+        display: grid;
+        grid-template-columns: repeat(4, 65px);
+        margin: 20px auto;
+        /* border: 2px solid red; */
+        gap: 7px;
+    }
+    
+    .tile {
+        width: 65px;
+        height: 65px;
+    }
+}
