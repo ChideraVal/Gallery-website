@@ -7,6 +7,15 @@
     
     <title>Number Match</title>
     <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "a848c691-7be8-4408-a189-10fc20361b5f",
+    });
+  });
+</script>
 </head>
 
 <body>
@@ -36,7 +45,7 @@
             </div>
 
             <div class="buttons">
-                <button id="btn">Hold me!!</button>
+                <button id="btn">Hold me now!!</button>
             </div>
         </div>
     </div>
@@ -176,30 +185,6 @@
 
         })
     </script>
-
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-<script>
-  window.OneSignal = window.OneSignal || [];
-  OneSignal.push(function() {
-    OneSignal.init({
-      appId: "4fcc438a-3f0a-4dbc-b59d-4d185994a301",
-      notifyButton: {
-        enable: false, // shows the bell icon so users can subscribe/unsubscribe
-      }
-    });
-  });
-
-    OneSignal.push(function() {
-  OneSignal.isPushNotificationsEnabled(function(isEnabled) {
-    if (!isEnabled) {
-      OneSignal.showNativePrompt(); // triggers the browser permission prompt
-    }
-  });
-});
-
-    
-</script>
-
     
 </body>
 
