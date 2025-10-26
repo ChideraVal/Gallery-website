@@ -48,6 +48,9 @@
 
             <div class="buttons">
                 <button id="btn">Hold me now!!</button>
+                <button id="installBtn" style="display: none;">
+  Install App
+                </button>
             </div>
         </div>
     </div>
@@ -81,6 +84,34 @@
       .then(reg => alert(`Service Worker registered: ${reg}`))
       .catch(err => alert(`Service Worker failed: ${err}`));
   }
+    </script>
+
+    <script>
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+
+  // Listen for the beforeinstallprompt event
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); // Prevent Chrome’s default prompt
+    deferredPrompt = e;
+    installBtn.style.display = 'block'; // Show your install button
+  });
+
+  // When the user clicks the install button
+  installBtn.addEventListener('click', async () => {
+    installBtn.style.display = 'none'; // Hide button after click
+    if (deferredPrompt) {
+      deferredPrompt.prompt(); // Show the install prompt
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User response: ${outcome}`);
+      deferredPrompt = null;
+    }
+  });
+
+  // Optional: Detect if app is already installed
+  window.addEventListener('appinstalled', () => {
+    console.log('App installed!');
+  });
     </script>
 
     <script>
