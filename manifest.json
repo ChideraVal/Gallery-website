@@ -1,7 +1,7 @@
 {
   "name": "Number Match",
   "short_name": "MySite",
-  "start_url": "index.html",
+  "start_url": "/Gallery-website/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0078ff",
