@@ -1,0 +1,20 @@
+{
+  "name": "My Website",
+  "short_name": "MySite",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0078ff",
+  "icons": [
+    {
+      "src": "heart (1).png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "heart (2).png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ]
+}
