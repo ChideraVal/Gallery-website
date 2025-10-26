@@ -1,10 +1,10 @@
 {
-  "name": "Number Match",
-  "short_name": "MySite",
+  "name": "Bixy Games",
+  "short_name": "Bixy",
   "start_url": "/Gallery-website/index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0078ff",
+  "background_color": "rebeccapurple",
+  "theme_color": "black",
   "icons": [
     {
       "src": "heart (1).png",
