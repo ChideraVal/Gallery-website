@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bivly Referrals</title>
+    <style>
+        :root {
+            --bg-color: #fff;
+            --card-bg: #fff;
+            --text-color: #000;
+            --subtext-color: #444;
+            --tag-bg: #ddd;
+            --tag-text: #000;
+            --button-bg: #333;
+            --button-hover: #333;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .bivly-banner {
+            background: linear-gradient(to bottom right, #c94b4b, #4b134f);
+            text-align: center;
+            padding: 20px 40px;
+            border-radius: 0px;
+            color: #fff;
+            margin: 0px;
+        }
+
+        .banner-logo {
+            width: 60px;
+            /* margin-bottom: 20px; */
+        }
+
+        .banner-heading {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .banner-subtext {
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+
+        .banner-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+
+        .banner-form input[type="email"] {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 999px;
+            border: none;
+            outline: none;
+            display: none;
+        }
+
+        .banner-form button {
+            padding: 14px 24px;
+            font-size: 16px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .banner-form button:hover {
+            background-color: #222;
+        }
+
+        .banner-disclaimer {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .brand-scroller {
+            overflow: hidden;
+            padding: 15px 0;
+            background: #fff;
+            margin: 0;
+            border-radius: 0px;
+            display: none;
+        }
+
+        .brand-track {
+            display: flex;
+            width: max-content;
+            animation: scroll-left 35s linear infinite;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .brand-track img {
+            height: 28px;
+            opacity: 0.7;
+            transition: transform 0.3s ease;
+        }
+
+        .brand-track img:hover {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .scroll-section {
+            margin: 0px 20px;
+        }
+
+        .scroll-container {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            /* padding-bottom: 10px; */
+
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE/Edge */
+
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari */
+        }
+
+        .prize-card {
+            flex: 0 0 60%;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 0px;
+            scroll-snap-align: start;
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 600px) {
+            .prize-card {
+                flex: 0 0 32%;
+            }
+
+            .banner-heading {
+                font-size: 40px;
+            }
+
+            .tag {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+
+            .bivly-banner {
+                padding: 50px 40px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .prize-card {
+                flex: 0 0 20%;
+            }
+
+            .banner-heading {
+                font-size: 55px;
+            }
+
+            .tag {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+        }
+
+        .prize-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .prize-name {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .meta {
+            color: var(--subtext-color);
+            margin: 5px 0 15px;
+            font-size: 14px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 5px 9px;
+            border-radius: 15px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .scroll-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .scroll-button {
+            background: var(--button-bg);
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, opacity 0.3s ease;
+        }
+
+        .scroll-button svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .scroll-button:hover:not(:disabled) {
+            background: var(--button-hover);
+        }
+
+        .scroll-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px 16px;
+        }
+
+        @media (min-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="bivly-banner">
+        <img src="https://picsum.photos/60/60?random=1" alt="Referral Logo" class="banner-logo">
+        <h1 class="banner-heading">Refer your friends, win amazing prizes</h1>
+        <p class="banner-subtext">Join Bivly Referrals Program today</p>
+        <form class="banner-form" onsubmit="event.preventDefault(); alert('Referral started!');">
+            <input type="email" placeholder="Enter your email address" required>
+            <button type="submit">Start referring</button>
+        </form>
+        <p class="banner-disclaimer">No spam. No credit card needed. Just refer and win.</p>
+    </section>
+
+    <div class="brand-scroller">
+        <div class="brand-track">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Shopify_logo_2018.svg" alt="Shopify">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Spotify_icon.svg" alt="Spotify">
+        </div>
+    </div>
+
+    <div class="scroll-section">
+        <h2>Featured Prizes</h2>
+        <div class="scroll-container" id="scrollPopular">
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=1" class="prize-img" alt="Prize 1">
+                <h3 class="prize-name">Bluetooth Speaker</h3>
+                <div class="meta">Referrals: 10, Stock: 3 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Lagos</span>
+                    <span class="tag">Time: 12hrs</span>
+                    <span class="tag">Pickup</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=2" class="prize-img" alt="Prize 2">
+                <h3 class="prize-name">Smart Watch</h3>
+                <div class="meta">Referrals: 15, Stock: 5 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Abuja</span>
+                    <span class="tag">Time: 8hrs</span>
+                    <span class="tag">Delivery</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=3" class="prize-img" alt="Prize 3">
+                <h3 class="prize-name">Backpack</h3>
+                <div class="meta">Referrals: 8, Stock: 6 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Lagos</span>
+                    <span class="tag">Time: 24hrs</span>
+                    <span class="tag">Pickup</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=4" class="prize-img" alt="Prize 4">
+                <h3 class="prize-name">Wireless Earbuds</h3>
+                <div class="meta">Referrals: 20, Stock: 2 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Ibadan</span>
+                    <span class="tag">Time: 10hrs</span>
+                    <span class="tag">Delivery</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=5" class="prize-img" alt="Prize 1">
+                <h3 class="prize-name">Bluetooth Speaker</h3>
+                <div class="meta">Referrals: 10, Stock: 3 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Lagos</span>
+                    <span class="tag">Time: 12hrs</span>
+                    <span class="tag">Pickup</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=6" class="prize-img" alt="Prize 2">
+                <h3 class="prize-name">Smart Watch</h3>
+                <div class="meta">Referrals: 15, Stock: 5 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Abuja</span>
+                    <span class="tag">Time: 8hrs</span>
+                    <span class="tag">Delivery</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=7" class="prize-img" alt="Prize 3">
+                <h3 class="prize-name">Backpack</h3>
+                <div class="meta">Referrals: 8, Stock: 6 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Lagos</span>
+                    <span class="tag">Time: 24hrs</span>
+                    <span class="tag">Pickup</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=8" class="prize-img" alt="Prize 4">
+                <h3 class="prize-name">Wireless Earbuds</h3>
+                <div class="meta">Referrals: 20, Stock: 2 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Ibadan</span>
+                    <span class="tag">Time: 10hrs</span>
+                    <span class="tag">Delivery</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-buttons">
+            <button class="scroll-button" onclick="scrollById('scrollPopular', -1)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                </svg>
+            </button>
+            <button class="scroll-button" onclick="scrollById('scrollPopular', 1)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="scroll-section">
+        <h2>New Prizes</h2>
+        <div class="scroll-container" id="scrollNew">
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=9" class="prize-img" alt="Prize 5">
+                <h3 class="prize-name">T-Shirt</h3>
+                <div class="meta">Referrals: 5, Stock: 10 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Lagos</span>
+                    <span class="tag">Time: 6hrs</span>
+                    <span class="tag">Pickup</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=10" class="prize-img" alt="Prize 6">
+                <h3 class="prize-name">Power Bank</h3>
+                <div class="meta">Referrals: 13, Stock: 7 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Abuja</span>
+                    <span class="tag">Time: 14hrs</span>
+                    <span class="tag">Delivery</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=11" class="prize-img" alt="Prize 7">
+                <h3 class="prize-name">Water Bottle</h3>
+                <div class="meta">Referrals: 3, Stock: 15 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Enugu</span>
+                    <span class="tag">Time: 5hrs</span>
+                    <span class="tag">Pickup</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=12" class="prize-img" alt="Prize 8">
+                <h3 class="prize-name">USB Drive</h3>
+                <div class="meta">Referrals: 7, Stock: 12 left</div>
+                <div class="tags">
+                    <span class="tag">Location: PH</span>
+                    <span class="tag">Time: 9hrs</span>
+                    <span class="tag">Delivery</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=13" class="prize-img" alt="Prize 5">
+                <h3 class="prize-name">T-Shirt</h3>
+                <div class="meta">Referrals: 5, Stock: 10 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Lagos</span>
+                    <span class="tag">Time: 6hrs</span>
+                    <span class="tag">Pickup</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=14" class="prize-img" alt="Prize 6">
+                <h3 class="prize-name">Power Bank</h3>
+                <div class="meta">Referrals: 13, Stock: 7 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Abuja</span>
+                    <span class="tag">Time: 14hrs</span>
+                    <span class="tag">Delivery</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=15" class="prize-img" alt="Prize 7">
+                <h3 class="prize-name">Water Bottle</h3>
+                <div class="meta">Referrals: 3, Stock: 15 left</div>
+                <div class="tags">
+                    <span class="tag">Location: Enugu</span>
+                    <span class="tag">Time: 5hrs</span>
+                    <span class="tag">Pickup</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+            <div class="prize-card">
+                <img src="https://picsum.photos/400/300?random=16" class="prize-img" alt="Prize 8">
+                <h3 class="prize-name">USB Drive</h3>
+                <div class="meta">Referrals: 7, Stock: 12 left</div>
+                <div class="tags">
+                    <span class="tag">Location: PH</span>
+                    <span class="tag">Time: 9hrs</span>
+                    <span class="tag">Delivery</span>
+                    <span class="tag">Delivered by: Brand</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-buttons">
+            <button class="scroll-button" onclick="scrollById('scrollNew', -1)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                </svg>
+            </button>
+            <button class="scroll-button" onclick="scrollById('scrollNew', 1)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    
