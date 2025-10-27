@@ -3,8 +3,8 @@
   "short_name": "Bixy",
   "start_url": "/Gallery-website/index.html",
   "display": "standalone",
-  "background_color": "rebeccapurple",
-  "theme_color": "black",
+  "background_color": "white",
+  "theme_color": "red",
   "icons": [
     {
       "src": "heart (1).png",
