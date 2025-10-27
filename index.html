@@ -10,7 +10,6 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="white">
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(async function(OneSignal) {
@@ -22,6 +21,12 @@
       },
     });
   });
+
+    if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('OneSignalSDKWorker.js')
+      .then(reg => alert(`OS Service Worker registered: ${reg}`))
+      .catch(err => alert(`OS Service Worker failed: ${err}`));
+    }
 </script>
     
 </head>
