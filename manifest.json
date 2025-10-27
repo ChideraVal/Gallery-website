@@ -1,7 +1,7 @@
 {
   "name": "Bixy Games",
   "short_name": "Bixy",
-  "start_url": "/Gallery-website/index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "white",
   "theme_color": "white",
@@ -21,13 +21,13 @@
   {
     "name": "Play Now",
     "short_name": "Play",
-    "url": "/Gallery-website/index.html",
+    "url": "/index.html",
     "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
   },
   {
     "name": "Log In",
     "short_name": "login",
-    "url": "/Gallery-website/store.html",
+    "url": "/store.html",
     "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
   }
   ]
