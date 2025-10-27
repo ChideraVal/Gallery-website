@@ -4,7 +4,7 @@
   "start_url": "/Gallery-website/index.html",
   "display": "standalone",
   "background_color": "white",
-  "theme_color": "red",
+  "theme_color": "white",
   "icons": [
     {
       "src": "heart (1).png",
@@ -16,5 +16,19 @@
       "sizes": "256x256",
       "type": "image/png"
     }
+  ],
+  "shortcuts": [
+  {
+    "name": "Play Now",
+    "short_name": "Play",
+    "url": "/Gallery-website/index.html",
+    "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
+  },
+  {
+    "name": "Log In",
+    "short_name": "login",
+    "url": "/Gallery-website/store.html",
+    "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
+  }
   ]
 }
