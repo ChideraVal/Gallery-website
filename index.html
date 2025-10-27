@@ -22,13 +22,8 @@
       },
     });
   });
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(reg => alert(`Service Worker registered: ${reg}`))
-      .catch(err => alert(`Service Worker failed: ${err}`));
-  }
 </script>
+    
 </head>
 
 <body>
@@ -89,6 +84,14 @@
             <button id="replay-button">Replay</button>
         </div>
     </div>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => alert(`Service Worker registered: ${reg}`))
+      .catch(err => alert(`Service Worker failed: ${err}`));
+  }
+    </script>
 
     <script>
   let deferredPrompt;
