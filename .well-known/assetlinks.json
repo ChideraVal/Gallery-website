@@ -1,0 +1,7 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "io.github.chideraval.twa",
+    "sha256_cert_fingerprints": ["9E:38:39:A4:CF:1A:1B:88:40:6D:8D:32:C1:91:D8:E1:A3:FB:16:6C:92:96:D2:A7:6D:72:EE:D5:ED:DB:46:2D"]}
+}]
