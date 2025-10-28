@@ -1,7 +1,1 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "io.github.chideraval.twa",
-    "sha256_cert_fingerprints": ["9E:38:39:A4:CF:1A:1B:88:40:6D:8D:32:C1:91:D8:E1:A3:FB:16:6C:92:96:D2:A7:6D:72:EE:D5:ED:DB:46:2D"]}
-}]
+[{      "relation": ["delegate_permission/common.handle_all_urls"],      "target": {        "namespace": "android_app",        "package_name": "io.github.chideraval.twa",        "sha256_cert_fingerprints": ["5C:A7:F5:D3:85:7C:F2:73:55:A6:32:7D:A5:2C:93:1E:F3:30:77:60:C6:17:9C:C6:82:0D:20:9D:7F:FE:5D:E9"]      }    }]
