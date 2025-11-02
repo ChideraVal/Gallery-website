@@ -1,243 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Number Match</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="white">
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "4fcc438a-3f0a-4dbc-b59d-4d185994a301",
-      safari_web_id: "web.onesignal.auto.5f176c09-6482-49c9-87ea-0c57aa3981a0",
-      notifyButton: {
-        enable: true,
-      },
-    });
-  });
-
-    if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('OneSignalSDKWorker.js')
-      .then(reg => alert(`OS Service Worker registered: ${reg}`))
-      .catch(err => alert(`OS Service Worker failed: ${err}`));
-    }
-</script>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click Game</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="page">
-        <div class="con">
-            <div class="load">
-                <div class="bar"></div>
-            </div>
+  <h1>Click Game</h1>
 
-            <div class="info">
-                <div id="countdown">
-                    <img src="hourglass_4189446.png" alt="" width="18" height="18">
-                    <span id="countdown-value">60s</span>
-                </div>
-                <div id="score">
-                    <img src="fire_7654108.png" alt="" width="18" height="18">
-                    <span id="score-value">0</span>
-                </div>
-                <div id="score">
-                    <img src="target_8992467.png" alt="" width="18" height="18">
-                    <span id="target"></span>
-                </div>
-            </div>
+  <p>Score: <span id="score">0</span></p>
+  <button id="increment">+1</button>
 
-            <div class="number">
-                <p id="count">0</p>
-            </div>
+  <nav>
+    <a href="settings.html">Settings</a> |
+    <a href="store.html">Store</a>
+  </nav>
 
-            <div class="buttons">
-                <button id="btn">Hold me now!!</button>
-                <button id="installBtn" style="display: none;">
-  Install App
-                </button>
-                <a href="store.html">visit store</a>
-            </div>
-        </div>
-    </div>
-    <div class="how" id="how-element">
-        <div class="howpage">
-            <h3>How To Play</h3>
+  <script>
+      // Only run the game logic on index.html
+document.addEventListener('DOMContentLoaded', () => {
+  const scoreEl = document.getElementById('score');
+  const button = document.getElementById('increment');
 
-            <p>1. Press and hold the "Hold me" button to start counting.</p>
-            <p>2. Release the button to stop and match the target number.</p>
-            <p>3. Match the target number to score a point.</p>
-            <p>4. You lose if you don't match the target number in 60 seconds.</p>
+  if (scoreEl && button) {
+    // Load saved score
+    let score = parseInt(localStorage.getItem('score')) || 0;
+    scoreEl.textContent = score;
 
-            <button id="start-button">Start</button>
-        </div>
-    </div>
-
-    <div class="how" id="gameover-element">
-        <div class="howpage">
-            <div class="gameover">
-                <h3>Game Over</h3>
-                <p id="gameover-text"></p>
-                <h4 id="score-text"></h4>
-            </div>
-            <button id="replay-button">Replay</button>
-        </div>
-    </div>
-
-    <script>
-    if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(reg => alert(`Service Worker registered: ${reg}`))
-      .catch(err => alert(`Service Worker failed: ${err}`));
+    // Increase and save score
+    button.addEventListener('click', () => {
+      score++;
+      scoreEl.textContent = score;
+      localStorage.setItem('score', score);
+    });
   }
-    </script>
-
-    <script>
-  let deferredPrompt;
-  const installBtn = document.getElementById('installBtn');
-
-  // Listen for the beforeinstallprompt event
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); // Prevent Chrome’s default prompt
-    deferredPrompt = e;
-    installBtn.style.display = 'block'; // Show your install button
-  });
-
-  // When the user clicks the install button
-  installBtn.addEventListener('click', async () => {
-    installBtn.style.display = 'none'; // Hide button after click
-    if (deferredPrompt) {
-      deferredPrompt.prompt(); // Show the install prompt
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`User response: ${outcome}`);
-      deferredPrompt = null;
-    }
-  });
-
-  // Optional: Detect if app is already installed
-  window.addEventListener('appinstalled', () => {
-    console.log('App installed!');
-  });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            let delay = 100;
-            let start = false;
-            let number = 0;
-            let target = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
-            let numberElement = document.getElementById('count');
-            let targetElement = document.getElementById('target');
-            let howElement = document.getElementById('how-element');
-            let gameoverElement = document.getElementById('gameover-element');
-            let gameoverText = document.getElementById('gameover-text');
-            let scoreText = document.getElementById('score-text');
-            let startButton = document.getElementById('start-button');
-            let replayButton = document.getElementById('replay-button');
-            targetElement.textContent = target;
-            let intervalId = null;
-
-            let initialTime = 60;
-            let initialScore = 0;
-            let tapButton = document.getElementById('btn');
-            let time = document.getElementById('countdown-value');
-            let score = document.getElementById('score-value');
-            let bar = document.querySelector('.bar');
-
-            startButton.onclick = () => {
-                howElement.style.display = 'none';
-                start = true;
-            }
-
-            replayButton.onclick = () => {
-                initialScore = 0;
-                initialTime = 60;
-                target = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
-                time.textContent = initialTime;
-                score.textContent = initialScore;
-                targetElement.textContent = target;
-                bar.style.width = `${(initialTime / 60) * 100}%`;
-                gameoverElement.style.display = 'none';
-                howElement.style.display = 'flex';
-                start = false;
-            }
-
-            let timer = setInterval(() => {
-                if (start) {
-                    if (initialTime > 0) {
-                        initialTime -= 1;
-                        time.textContent = initialTime + 's';
-                    }
-                    let newBarWidth = bar.style.width - 100 / 10;
-                    bar.style.width = `${(initialTime / 60) * 100}%`;
-                    if (initialTime === 0) {
-                        gameoverElement.style.display = 'flex';
-                        gameoverText.textContent = `You scored ${initialScore} points!`;
-                        scoreText.textContent = `Score: ${initialScore}`;
-                    }
-                }
-            }, 1000)
-
-            function checkWin() {
-                if (number == target) {
-                    alert('You win!')
-                    initialScore++;
-                    score.textContent = initialScore;
-                    initialTime = 60;
-                    target = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
-                    targetElement.textContent = target;
-                } else {
-                    alert('You lose, try again!')
-                }
-                number = 0;
-                numberElement.textContent = '0';
-            }
-
-            tapButton.addEventListener('mousedown', () => {
-                intervalId = setInterval(() => {
-                    number++;
-                    numberElement.textContent = number;
-                }, delay);
-            })
-
-            tapButton.addEventListener('touchstart', () => {
-                intervalId = setInterval(() => {
-                    number++;
-                    numberElement.textContent = number;
-                }, delay);
-            })
-
-            tapButton.addEventListener('mouseup', () => {
-                clearInterval(intervalId);
-                checkWin();
-            })
-
-            // tapButton.addEventListener('mouseleave', () => {
-            //     clearInterval(intervalId);
-            //     checkWin();
-            // })
-
-            tapButton.addEventListener('touchend', () => {
-                clearInterval(intervalId);
-                checkWin();
-            })
-
-            tapButton.addEventListener('touchcancel', () => {
-                clearInterval(intervalId);
-                checkWin();
-            })
-
-            // document.documentElement.style.setProperty('--bg-color', 'red');
-
-        })
-    </script>
+});
+  </script>
     
+    <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then((r) => alert(`Service Worker Registered: ${r}`))
+    .catch((r) => alert(`Service Worker Failed: ${r}`));
+    
+}
+    </script>
 </body>
-
 </html>
