@@ -1,0 +1,84 @@
+/* ===== Reset ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ===== Body ===== */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #f4f4f4;
+  color: #333;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ===== Headings ===== */
+h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #222;
+}
+
+/* ===== Paragraphs ===== */
+p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* ===== Buttons ===== */
+button {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  background: #0078ff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #005fd1;
+}
+
+/* ===== Navigation ===== */
+nav {
+  margin-top: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #0078ff;
+  font-weight: bold;
+  margin: 0 10px;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: #005fd1;
+}
+
+/* ===== Score Display ===== */
+#score {
+  font-weight: bold;
+  color: #0078ff;
+}
+
+/* ===== Small Screens ===== */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+}
