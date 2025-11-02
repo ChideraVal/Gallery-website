@@ -1,145 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background: white;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .login-container {
-      background: white;
-      padding: 2rem;
-      border-radius: 15px;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .login-form h2 {
-      margin-bottom: 0.5rem;
-      color: #333;
-    }
-
-    .login-form p {
-      margin-bottom: 1.5rem;
-      color: #666;
-    }
-
-    .login-form label {
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: bold;
-      color: #555;
-    }
-
-    .login-form input[type="email"],
-    .login-form input[type="text"],
-    .login-form input[type="password"] {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1.2rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      transition: border-color 0.3s;
-    }
-
-    .login-form input:focus {
-      border-color: #667eea;
-      outline: none;
-    }
-
-    .show-password {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1.2rem;
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    .show-password input {
-      margin-right: 0.5rem;
-    }
-
-    .login-form button {
-      width: 100%;
-      padding: 0.75rem;
-      background: #667eea;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .login-form button:hover {
-      background: #5a67d8;
-    }
-
-    .links {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-    }
-
-    .links a {
-      color: #667eea;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .links a:hover {
-      color: #5a67d8;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="login-container">
-    <form class="login-form">
-      <h2>Welcome Back</h2>
-      <p>Please login to your account</p>
-      
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="you@example.com" required />
+  <h1>Store</h1>
+  <p>Buy upgrades and items here (coming soon!)</p>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" required />
+  <nav>
+    <a href="index.html">Game</a> |
+    <a href="settings.html">Settings</a>
+  </nav>
 
-      <div class="show-password">
-        <input type="checkbox" id="togglePassword" />
-        <label for="togglePassword">Show Password</label>
-      </div>
-
-      <button type="submit">Login</button>
-      
-      <div class="links">
-        <a href="#">Forgot password?</a>
-        <a href="#">Create account</a>
-      </div>
-    </form>
-  </div>
-
-  <script>
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordField = document.getElementById('password');
-
-    togglePassword.addEventListener('change', function () {
-      passwordField.type = this.checked ? 'text' : 'password';
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
