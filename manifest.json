@@ -1,6 +1,6 @@
 {
-  "name": "Bixy Games",
-  "short_name": "Bixy",
+  "name": "Tap Game",
+  "short_name": "Tap Game",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "white",
@@ -25,8 +25,8 @@
     "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
   },
   {
-    "name": "Log In",
-    "short_name": "login",
+    "name": "Store",
+    "short_name": "Visit store",
     "url": "store.html",
     "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
   }
