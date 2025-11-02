@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js')
-    .then((r) => alert(`Service Worker Registered: ${r}`))
-    .catch((r) => alert(`Service Worker Failed: ${r}`));
+    .then((r) => console.log(`Service Worker Registered: ${r}`))
+    .catch((r) => console.log(`Service Worker Failed: ${r}`));
     
 }
     </script>
