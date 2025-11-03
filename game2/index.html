@@ -26,14 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (scoreEl && button) {
     // Load saved score
-    let score = parseInt(localStorage.getItem('score')) || 0;
+    let score = parseInt(localStorage.getItem('score2')) || 0;
     scoreEl.textContent = score;
 
     // Increase and save score
     button.addEventListener('click', () => {
       score++;
       scoreEl.textContent = score;
-      localStorage.setItem('score', score);
+      localStorage.setItem('score2', score);
     });
   }
 });
