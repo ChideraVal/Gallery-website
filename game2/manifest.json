@@ -1,10 +1,10 @@
 {
-  "name": "Tap Game",
-  "short_name": "Tap Game",
-  "start_url": "index.html",
+  "name": "Game Two",
+  "short_name": "Game Two",
+  "start_url": "/game2/index.html",
   "display": "standalone",
   "background_color": "white",
-  "theme_color": "blue",
+  "theme_color": "red",
   "icons": [
     {
       "src": "heart (1).png",
@@ -21,13 +21,13 @@
   {
     "name": "Play Now",
     "short_name": "Play",
-    "url": "index.html",
+    "url": "/game2/index.html",
     "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
   },
   {
     "name": "Store",
     "short_name": "Visit store",
-    "url": "store.html",
+    "url": "/game2/store.html",
     "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
   }
   ]

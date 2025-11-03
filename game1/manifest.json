@@ -1,0 +1,34 @@
+{
+  "name": "Game One",
+  "short_name": "Game One",
+  "start_url": "/game1/index.html",
+  "display": "standalone",
+  "background_color": "white",
+  "theme_color": "blue",
+  "icons": [
+    {
+      "src": "heart (1).png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "heart (2).png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+  {
+    "name": "Play Now",
+    "short_name": "Play",
+    "url": "/game1/index.html",
+    "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
+  },
+  {
+    "name": "Store",
+    "short_name": "Visit store",
+    "url": "/game1/store.html",
+    "icons": [{ "src": "heart (1).png", "sizes": "96x96" }]
+  }
+  ]
+}

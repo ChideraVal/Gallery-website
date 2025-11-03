@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="/manifest2.json">
+  <link rel="manifest" href="/game2/manifest.json">
   <title>Click Game</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/game2/style.css">
 </head>
 <body>
   <h1>Click Game 2</h1>
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker2.js')
+  navigator.serviceWorker.register('/game2/service-worker.js')
     .then((r) => console.log(`Service Worker Registered: ${r}`))
     .catch((r) => console.log(`Service Worker Failed: ${r}`));
     

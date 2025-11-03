@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/game3/manifest.json">
+  <title>Click Game</title>
+  <link rel="stylesheet" href="/game3/style.css">
+</head>
+<body>
+  <h1>Click Game 3</h1>
+
+  <p>Score: <span id="score">0</span></p>
+  <button id="increment">+1</button>
+
+  <nav>
+    <a href="settings.html">Settings</a> |
+    <a href="store.html">Store</a>
+  </nav>
+
+  <script>
+      // Only run the game logic on index.html
+document.addEventListener('DOMContentLoaded', () => {
+  const scoreEl = document.getElementById('score');
+  const button = document.getElementById('increment');
+
+  if (scoreEl && button) {
+    // Load saved score
+    let score = parseInt(localStorage.getItem('score')) || 0;
+    scoreEl.textContent = score;
+
+    // Increase and save score
+    button.addEventListener('click', () => {
+      score++;
+      scoreEl.textContent = score;
+      localStorage.setItem('score', score);
+    });
+  }
+});
+  </script>
+    
+    <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/game3/service-worker.js')
+    .then((r) => console.log(`Service Worker Registered: ${r}`))
+    .catch((r) => console.log(`Service Worker Failed: ${r}`));
+    
+}
+    </script>
+</body>
+</html>

@@ -1,10 +1,10 @@
-const CACHE_NAME = 'click-game-v1';
+const CACHE_NAME = 'game-one-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/settings.html',
-  '/store.html',
-  '/style.css'
+  '/game1/',
+  '/game1/index.html',
+  '/game1/settings.html',
+  '/game1/store.html',
+  '/game1/style.css'
 ];
 
 self.addEventListener('install', e => {

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="/game1/manifest.json">
   <title>Click Game</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/game1/style.css">
 </head>
 <body>
-  <h1>Click Game</h1>
+  <h1>Click Game 1</h1>
 
   <p>Score: <span id="score">0</span></p>
   <button id="increment">+1</button>
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js')
+  navigator.serviceWorker.register('/game1/service-worker.js')
     .then((r) => console.log(`Service Worker Registered: ${r}`))
     .catch((r) => console.log(`Service Worker Failed: ${r}`));
     
