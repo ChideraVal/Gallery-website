@@ -2,6 +2,8 @@ const CACHE_NAME = 'game-one-v1';
 const urlsToCache = [
   '/game1/',
   '/game1/index.html',
+  '/game1/moves.html',
+  '/game1/game2.css',
   '/game1/settings.html',
   '/game1/store.html',
   '/game1/style.css'
