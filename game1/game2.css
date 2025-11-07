@@ -102,15 +102,16 @@ body {
 
 #puzzle-board {
     display: grid;
-    grid-template-columns: repeat(3, 85px);
+    grid-template-columns: repeat(4, 1fr);
     margin: 20px auto;
-    /* border: 2px solid red; */
+    /* border: 2px solid blue; */
     gap: 7px;
+    width: 100%;
 }
 
 .tile {
-    width: 85px;
-    height: 85px;
+    /* width: 85px; */
+    height: 75px;
     box-sizing: border-box;
     border: 2px solid #fff;
     box-shadow: 0 3px rgb(139, 136, 136);
@@ -261,13 +262,13 @@ body {
 @media (max-width: 500px) {
     #puzzle-board {
         display: grid;
-        grid-template-columns: repeat(3, 72px);
+        grid-template-columns: repeat(4, 1fr);
         margin: 20px auto;
-        gap: 7px;
+        /* gap: 7px; */
     }
     
-    .tile {
+    /* .tile {
         width: 72px;
         height: 72px;
-    }
+    } */
 }

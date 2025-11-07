@@ -73,7 +73,7 @@
                 const endGameButton = document.getElementById("end-game-button");
                 const remText = document.getElementById("rem");
 
-                const gridSize = 3;
+                const gridSize = 4;
                 const oldtiles = [...Array(gridSize * gridSize - 1).keys()].map(i => i + 1);
                 // const tiles = [1, 4, 5, 2, 3, 6, 8, 7, 10, 9, 11, 12, 13, 15, 14];
 
@@ -142,7 +142,7 @@
 
                 tiles.push(null); // Represent the empty space
 
-                fixed = getRandomFixedTiles(1, 8);
+                fixed = getRandomFixedTiles(1, 15);
                 console.log(fixed);
 
                 console.log("correct order: ", tiles);
