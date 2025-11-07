@@ -102,7 +102,7 @@ body {
 
 #puzzle-board {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     margin: 20px auto;
     /* border: 2px solid blue; */
     gap: 7px;
@@ -111,7 +111,7 @@ body {
 
 .tile {
     /* width: 85px; */
-    height: 75px;
+    height: 85px;
     box-sizing: border-box;
     border: 2px solid #fff;
     box-shadow: 0 3px rgb(139, 136, 136);
@@ -262,7 +262,7 @@ body {
 @media (max-width: 500px) {
     #puzzle-board {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         margin: 20px auto;
         /* gap: 7px; */
     }
