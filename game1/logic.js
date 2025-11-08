@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("correct order: ", tiles);
     let shuffledTiles;
-    let moves = 52; // Initial time limit in seconds
+    let moves = 42; // Initial time limit in seconds
     let timerInterval;
     let score = 0;
     let progress = 100;
