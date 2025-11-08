@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <title>Click Game</title>
   <link rel="stylesheet" href="/game1/style.css">
 </head>
+
 <body>
   <h1>Click Game 1</h1>
 
@@ -19,34 +21,37 @@
     <a href="store.html">Store</a>
   </nav>
 
-  <script>
-      // Only run the game logic on index.html
-document.addEventListener('DOMContentLoaded', () => {
-  const scoreEl = document.getElementById('score');
-  const button = document.getElementById('increment');
+  <!-- <script>
+    // Only run the game logic on index.html
+    document.addEventListener('DOMContentLoaded', () => {
+      const scoreEl = document.getElementById('score');
+      const button = document.getElementById('increment');
 
-  if (scoreEl && button) {
-    // Load saved score
-    let score = parseInt(localStorage.getItem('score1')) || 0;
-    scoreEl.textContent = score;
+      if (scoreEl && button) {
+        // Load saved score
+        let score = parseInt(localStorage.getItem('score1')) || 0;
+        scoreEl.textContent = score;
 
-    // Increase and save score
-    button.addEventListener('click', () => {
-      score++;
-      scoreEl.textContent = score;
-      localStorage.setItem('score1', score);
+        // Increase and save score
+        button.addEventListener('click', () => {
+          score++;
+          scoreEl.textContent = score;
+          localStorage.setItem('score1', score);
+        });
+      }
     });
-  }
-});
+  </script> -->
+
+  <script src="game.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/game1/service-worker.js')
+        .then((r) => console.log(`Service Worker Registered: ${r}`))
+        .catch((r) => console.log(`Service Worker Failed: ${r}`));
+
+    }
   </script>
-    
-    <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/game1/service-worker.js')
-    .then((r) => console.log(`Service Worker Registered: ${r}`))
-    .catch((r) => console.log(`Service Worker Failed: ${r}`));
-    
-}
-    </script>
 </body>
+
 </html>

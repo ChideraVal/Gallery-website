@@ -24,7 +24,7 @@ body {
     background-color: rgb(169, 187, 226);
     background-color: white;
     background-color: #33ccff;
-    background-color: #031920;
+    /* background-color: #031920; */
 
     /* background-color: black; */
     position: fixed;
@@ -68,8 +68,8 @@ body {
     -ms-user-select: none;
     user-select: none;
     background-color: #4d79ff;
-    background-color: rgb(228, 59, 228);
-    background-color: #00000036;
+    /* background-color: rgb(228, 59, 228); */
+    /* background-color: #00000036; */
     /* text-shadow: -1px 1px 0 #141414,
         1px 1px 0 #141414,
         1px -1px 0 #141414,
@@ -117,7 +117,7 @@ body {
     box-shadow: 0 3px rgb(139, 136, 136);
     color: #fff;
     background-color: rgb(11, 60, 165);
-    background-color: #12556b;
+    /* background-color: #12556b; */
     /* background-color: #022330; */
 
     
@@ -170,7 +170,7 @@ body {
     /* background-color: rgb(136, 255, 0); */
     /* background-color: rgb(212, 0, 255); */
     background-color: rgb(255, 0, 140);
-    background-color: #fa6807;
+    /* background-color: #fa6807; */
 
 
     /* background-color: rgb(106, 106, 231); */
@@ -202,7 +202,7 @@ body {
     padding: .4em;
     box-sizing: border-box;
     background-color: #088ab6;
-    background-color: #12556b;
+    /* background-color: #12556b; */
 
 
 }
