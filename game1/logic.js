@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const endGameButton = document.getElementById("end-game-button");
     const remText = document.getElementById("rem");
 
-    const gridSize = 3;
+    const gridSize = 4;
     const oldtiles = [...Array(gridSize * gridSize - 1).keys()].map(i => i + 1);
     // const tiles = [1, 4, 5, 2, 3, 6, 8, 7, 10, 9, 11, 12, 13, 15, 14];
 
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getRandomFixedTiles(min = 1, max = 8) {
-        const allTiles = [1, 2, 3, 4, 5, 6, 7, 8];
+        const allTiles = [...oldtiles];
 
         // random number of tiles between min and max
         const count = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -159,10 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 tileElement.style.backgroundColor = 'green';
             }
 
-            // if (getIncorrectTiles(shuffledTiles, tiles, fixed).includes(tile)) {
-            //     tileElement.style.color = 'green';
-            // }
-
             if (!fixed.includes(tile) && tile !== null && !getIncorrectTiles(shuffledTiles, tiles, fixed).includes(tile)) {
                 tileElement.style.color = 'red';
             }
@@ -177,10 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
             no_incorrect_fixed = countIncorrectTiles(shuffledTiles, tiles, fixed)
             incorrect_fixed = getIncorrectTiles(shuffledTiles, tiles, fixed)
             scoreValue.textContent = `${no_correct_fixed}/${fixed.length}`;
-            icScoreValue.textContent = `${no_incorrect_fixed}/${8 - fixed.length}`;
+            icScoreValue.textContent = `${no_incorrect_fixed}/${15 - fixed.length}`;
         });
-        // Update the progress bar
-        // progressBar.style.width = "100%";
     }
 
     // Function to handle tile click events
@@ -198,20 +192,13 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(no_correct_fixed);
             console.log(correct_fixed);
             if (checkWin(shuffledTiles, tiles, fixed)) {
-                // Player wins
-                // score += 1;
-                // scoreValue.textContent = score;
-                // clearInterval(timerInterval);
-                // alert("Congratulations! You won!");
-                // resetGame();
                 endGame();
             }
 
-
             // Calculate the new win percentage based on tiles in their correct positions
-            const correctOrderCount = tiles.reduce((count, tile, index) => {
-                return count + (tile === shuffledTiles[index] && tile !== null ? 1 : 0);
-            }, 0);
+            // const correctOrderCount = tiles.reduce((count, tile, index) => {
+            //     return count + (tile === shuffledTiles[index] && tile !== null ? 1 : 0);
+            // }, 0);
             scoreValue.textContent = `${no_correct_fixed}/${fixed.length}`;
         }
     }
