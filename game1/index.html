@@ -89,16 +89,13 @@
 </div>
 
 <script>
-const ads = [
-    "https://picsum.photos/id/1011/420/260",
-    "https://picsum.photos/id/1025/420/260",
-    "https://picsum.photos/id/1035/420/260",
-    "https://picsum.photos/id/1043/420/260"
-];
-
-const duration = 10; // seconds per ad
+const numberOfAds = 4;
+const duration = 5; // seconds per ad
 let currentIndex = 0;
 let viewedAds = [];
+
+// Generate random Picsum images
+const ads = Array.from({length: numberOfAds}, () => `https://picsum.photos/420/260?random=${Math.floor(Math.random()*1000)}`);
 
 const adImage = document.getElementById("adImage");
 const progress = document.getElementById("progress");
