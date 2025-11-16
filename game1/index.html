@@ -90,13 +90,13 @@
 
 <script>
 const ads = [
-    "https://picsum.photos/420/260?random=1",
-    "https://picsum.photos/420/260?random=2",
-    "https://picsum.photos/420/260?random=3",
-    "https://picsum.photos/420/260?random=4"
+    "https://picsum.photos/id/1011/420/260",
+    "https://picsum.photos/id/1025/420/260",
+    "https://picsum.photos/id/1035/420/260",
+    "https://picsum.photos/id/1043/420/260"
 ];
 
-const duration = 5; // seconds per ad
+const duration = 10; // seconds per ad
 let currentIndex = 0;
 let viewedAds = [];
 
@@ -143,7 +143,6 @@ function loadAd(index) {
             timerEl.innerText = `Viewed ad ${index + 1} of ${ads.length}`;
             nextBtn.classList.add("enabled");
 
-            // Mark as fully viewed
             if (!viewedAds.includes(ads[index])) {
                 viewedAds.push(ads[index]);
             }
@@ -164,16 +163,14 @@ nextBtn.onclick = () => {
         nextBtn.innerText = "Claim Reward";
         nextBtn.classList.remove("enabled");
 
-        // Reward user & send viewed ads to server
         rewardUser(viewedAds.length);
         sendViewedAdsToServer(viewedAds);
     }
 };
 
-// --- Reward function (example) ---
+// --- Reward function ---
 function rewardUser(count) {
     alert(`Congratulations! You viewed ${count} ads and earned your reward.`);
-    // Here you can give coins, points, or unlock content
 }
 
 // --- Send viewed ads to server for billing ---
@@ -182,16 +179,16 @@ function sendViewedAdsToServer(viewedAds) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ads: viewedAds, userId: 'USER_ID' })
-    }).then(res => console.log('Viewed ads sent to server'))
-      .catch(err => console.error('Failed to send viewed ads:', err));
+    }).then(() => alert('Viewed ads sent to server'))
+      .catch(() => alert('Failed to send viewed ads'));
 }
 
 // --- Start after preloading ---
 preloadAds(ads)
     .then(() => loadAd(currentIndex))
     .catch(failed => {
-        console.warn("Some ads failed to load:", failed);
-        loadAd(currentIndex); // load whatever succeeded
+        alert("Some ads failed to load: " + failed.join(', '));
+        loadAd(currentIndex);
     });
 </script>
 
