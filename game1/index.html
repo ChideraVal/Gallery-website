@@ -1,57 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="/game1/manifest.json">
-  <title>Click Game</title>
-  <link rel="stylesheet" href="/game1/style.css">
-</head>
-
-<body>
-  <h1>Click Game 1</h1>
-
-  <p>Score: <span id="score">0</span></p>
-  <button id="increment">+1</button>
-
-  <nav>
-    <a href="moves.html">Play</a> |
-    <a href="settings.html">Settings</a> |
-    <a href="store.html">Store</a>
-  </nav>
-
-  <!-- <script>
-    // Only run the game logic on index.html
-    document.addEventListener('DOMContentLoaded', () => {
-      const scoreEl = document.getElementById('score');
-      const button = document.getElementById('increment');
-
-      if (scoreEl && button) {
-        // Load saved score
-        let score = parseInt(localStorage.getItem('score1')) || 0;
-        scoreEl.textContent = score;
-
-        // Increase and save score
-        button.addEventListener('click', () => {
-          score++;
-          scoreEl.textContent = score;
-          localStorage.setItem('score1', score);
-        });
-      }
-    });
-  </script> -->
-
-  <script src="game.js"></script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/game1/service-worker.js')
-        .then((r) => console.log(`Service Worker Registered: ${r}`))
-        .catch((r) => console.log(`Service Worker Failed: ${r}`));
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rewarded Ad Viewer</title>
+<style>
+    body {
+        margin: 0;
+        background: #f5f5f5;
+        font-family: Arial, sans-serif;
+        color: #222;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
     }
-  </script>
-</body>
 
+    #progress {
+        height: 5px;
+        width: 0%;
+        background: #4ba3ff;
+        transition: width linear;
+    }
+
+    .ad-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        animation: fade 0.5s;
+    }
+
+    .ad-image {
+        width: 100%;
+        max-width: 460px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .controls {
+        padding: 20px;
+        text-align: center;
+    }
+
+    #timer {
+        font-size: 15px;
+        opacity: 0.8;
+        margin-bottom: 12px;
+    }
+
+    #nextBtn {
+        background: #4ba3ff;
+        border: none;
+        color: #fff;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 350px;
+        opacity: 0.4;
+        pointer-events: none;
+        transition: 0.3s;
+    }
+
+    #nextBtn.enabled {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    @keyframes fade {
+        from { opacity: 0; transform: scale(0.97); }
+        to { opacity: 1; transform: scale(1); }
+    }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div class="ad-container">
+    <img id="adImage" class="ad-image" src="" />
+</div>
+
+<div class="controls">
+    <div id="timer"></div>
+    <button id="nextBtn">Next Ad</button>
+</div>
+
+<script>
+const ads = [
+    "https://via.placeholder.com/420x260?text=Ad+1",
+    "https://via.placeholder.com/420x260?text=Ad+2",
+    "https://via.placeholder.com/420x260?text=Ad+3",
+    "https://via.placeholder.com/420x260?text=Ad+4"
+];
+
+const duration = 10; // seconds per ad
+let currentIndex = 0;
+let viewedAds = [];
+
+const adImage = document.getElementById("adImage");
+const progress = document.getElementById("progress");
+const timerEl = document.getElementById("timer");
+const nextBtn = document.getElementById("nextBtn");
+
+// --- Preload all ads ---
+function preloadAds(adUrls) {
+    const promises = adUrls.map(url => new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => resolve(url);
+        img.onerror = () => reject(url);
+    }));
+    return Promise.all(promises);
+}
+
+// --- Load ad with timer ---
+function loadAd(index) {
+    adImage.src = ads[index];
+    nextBtn.classList.remove("enabled");
+    timerEl.innerText = `Loading ad...`;
+
+    progress.style.transition = "none";
+    progress.style.width = "0%";
+    progress.offsetWidth;
+
+    setTimeout(() => {
+        progress.style.transition = "width " + duration + "s linear";
+        progress.style.width = "100%";
+    }, 100);
+
+    let timeLeft = duration;
+    timerEl.innerText = `Viewing ad ${index + 1} of ${ads.length}... ${timeLeft}s`;
+
+    const countdown = setInterval(() => {
+        timeLeft--;
+        if (timeLeft > 0) {
+            timerEl.innerText = `Viewing ad ${index + 1} of ${ads.length}... ${timeLeft}s`;
+        } else {
+            clearInterval(countdown);
+            timerEl.innerText = `Viewed ad ${index + 1} of ${ads.length}`;
+            nextBtn.classList.add("enabled");
+
+            // Mark as fully viewed
+            if (!viewedAds.includes(ads[index])) {
+                viewedAds.push(ads[index]);
+            }
+        }
+    }, 1000);
+}
+
+// --- Handle next button ---
+nextBtn.onclick = () => {
+    if (!nextBtn.classList.contains("enabled")) return;
+
+    if (currentIndex < ads.length - 1) {
+        currentIndex++;
+        loadAd(currentIndex);
+    } else {
+        timerEl.innerText = "All ads viewed!";
+        progress.style.width = "100%";
+        nextBtn.innerText = "Claim Reward";
+        nextBtn.classList.remove("enabled");
+
+        // Reward user & send viewed ads to server
+        rewardUser(viewedAds.length);
+        sendViewedAdsToServer(viewedAds);
+    }
+};
+
+// --- Reward function (example) ---
+function rewardUser(count) {
+    alert(`Congratulations! You viewed ${count} ads and earned your reward.`);
+    // Here you can give coins, points, or unlock content
+}
+
+// --- Send viewed ads to server for billing ---
+function sendViewedAdsToServer(viewedAds) {
+    fetch('/ads/viewed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ads: viewedAds, userId: 'USER_ID' })
+    }).then(res => console.log('Viewed ads sent to server'))
+      .catch(err => console.error('Failed to send viewed ads:', err));
+}
+
+// --- Start after preloading ---
+preloadAds(ads)
+    .then(() => loadAd(currentIndex))
+    .catch(failed => {
+        console.warn("Some ads failed to load:", failed);
+        loadAd(currentIndex); // load whatever succeeded
+    });
+</script>
+
+</body>
 </html>
