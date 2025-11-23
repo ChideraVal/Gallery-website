@@ -1,51 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="/game2/manifest.json">
-  <title>Click Game</title>
-  <link rel="stylesheet" href="/game2/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Chat Interface</title>
+    <style>
+        /* --- Reset & Base Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #1f1f1f; /* Dark grey wrapper */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* --- Header --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 16px;
+            border-bottom: 1px solid #333;
+            background-color: #1f1f1f;
+        }
+
+        header h1 {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            fill: white;
+        }
+
+        /* --- Content Area --- */
+        .content {
+            flex: 1;
+            padding: 0 16px;
+            background-color: #0f0f0f; /* Main black bg */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Info Row (Pin & Count) --- */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 12px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        .pin-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pin-icon {
+            width: 12px;
+            fill: #aaa;
+        }
+
+        /* --- The Dynamic Super Chat Card --- */
+        .super-chat-card {
+            background-color: #00E5FF; /* Default Start Color */
+            border-radius: 12px;
+            padding: 16px;
+            color: #000000; /* Text color inside card */
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .username {
+            font-weight: 500;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .price-tag {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .message-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(0,0,0,0.2);
+            padding: 8px 0;
+            font-size: 16px;
+            color: rgba(0,0,0,0.8);
+            outline: none;
+        }
+
+        .message-input::placeholder {
+            color: rgba(0,0,0,0.5);
+        }
+
+        /* --- Slider Section --- */
+        .slider-section {
+            margin-top: 30px;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .big-price {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .big-price span {
+            font-weight: 700;
+        }
+
+        /* Custom Range Slider Styling */
+        .slider-container {
+            position: relative;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* The ticks (dots) behind the slider */
+        .ticks {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .tick {
+            width: 4px;
+            height: 4px;
+            background-color: #555;
+            border-radius: 50%;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        /* The track */
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: #555; /* Grey base track */
+            border-radius: 1px;
+        }
+
+        /* The thumb (handle) */
+        input[type=range]::-webkit-slider-thumb {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #3EA6FF; /* Bright Blue */
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -8px; /* Center vertically on the 2px track */
+            box-shadow: 0 0 0 0px rgba(62, 166, 255, 0.3);
+            transition: box-shadow 0.2s;
+        }
+
+        input[type=range]:active::-webkit-slider-thumb {
+            box-shadow: 0 0 0 10px rgba(62, 166, 255, 0.1);
+        }
+
+        /* Dynamic blue track fill */
+        #range-fill {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 2px;
+            background: #3EA6FF;
+            transform: translateY(-50%);
+            z-index: 1;
+            pointer-events: none;
+            width: 0%; /* Changed via JS */
+        }
+
+
+        /* --- Footer --- */
+        .footer {
+            padding: 16px;
+            background-color: #1f1f1f;
+            border-top: 1px solid #333;
+        }
+
+        .legal-text {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .legal-text a {
+            color: #3EA6FF;
+            text-decoration: none;
+        }
+
+        .buy-btn {
+            width: 100%;
+            background-color: #3EA6FF;
+            color: #0f0f0f;
+            border: none;
+            padding: 12px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .buy-btn:hover {
+            background-color: #63b8ff;
+        }
+
+    </style>
 </head>
 <body>
-  <h1>Click Game 2</h1>
 
-  <p>Score: <span id="score">0</span></p>
-  <button id="increment">+1</button>
+<div class="container">
+    <header>
+        <h1>Send a Super Chat</h1>
+        <div class="header-icons">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"></path>
+            </svg>
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+            </svg>
+        </div>
+    </header>
 
-  <nav>
-    <a href="settings.html">Settings</a> |
-    <a href="store.html">Store</a>
-  </nav>
+    <div class="content">
+        <div class="info-row">
+            <div class="pin-info">
+                <svg class="pin-icon" viewBox="0 0 24 24">
+                    <path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"></path>
+                </svg>
+                <span id="pin-time">0 seconds</span>
+            </div>
+            <div id="char-count">0/50</div>
+        </div>
 
-  <script>
-      // Only run the game logic on index.html
-document.addEventListener('DOMContentLoaded', () => {
-  const scoreEl = document.getElementById('score');
-  const button = document.getElementById('increment');
+        <div class="super-chat-card" id="chat-card">
+            <div class="card-header">
+                <div class="avatar">C</div>
+                <div class="user-details">
+                    <span class="username">@cee4985</span>
+                    <span class="price-tag" id="card-price">NGN 400.00</span>
+                </div>
+            </div>
+            <input type="text" class="message-input" id="msg-input" placeholder="Your amount and message will be public..." maxlength="50">
+        </div>
 
-  if (scoreEl && button) {
-    // Load saved score
-    let score = parseInt(localStorage.getItem('score2')) || 0;
-    scoreEl.textContent = score;
+        <div class="slider-section">
+            <div class="big-price">
+                ₦ <span id="display-price">400.00</span> NGN
+            </div>
 
-    // Increase and save score
-    button.addEventListener('click', () => {
-      score++;
-      scoreEl.textContent = score;
-      localStorage.setItem('score2', score);
+            <div class="slider-container">
+                <div class="ticks">
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                </div>
+                
+                <div id="range-fill"></div>
+
+                <input type="range" min="0" max="11" value="0" step="1" id="price-slider">
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="legal-text">
+            By continuing, you verify that you are at least 18 years old and agree to <a href="#">these terms</a>.
+        </p>
+        <button class="buy-btn">Buy and Send</button>
+    </div>
+</div>
+
+<script>
+    // Super Chat Tiers Data (Simulated logic similar to YouTube)
+    // Colors: Cyan -> Blue -> Green -> Yellow -> Orange -> Magenta -> Red
+    const tiers = [
+        { price: 400, color: '#00E5FF', time: '0 seconds', chars: 50, textColor: '#000' },
+        { price: 800, color: '#00E5FF', time: '0 seconds', chars: 50, textColor: '#000' },
+        { price: 2000, color: '#1E88E5', time: '2 minutes', chars: 150, textColor: '#fff' }, // Blue
+        { price: 4000, color: '#00BFA5', time: '5 minutes', chars: 200, textColor: '#fff' }, // Green
+        { price: 10000, color: '#FFB300', time: '10 minutes', chars: 225, textColor: '#000' }, // Yellow
+        { price: 20000, color: '#E65100', time: '30 minutes', chars: 250, textColor: '#fff' }, // Orange
+        { price: 40000, color: '#C2185B', time: '1 hour', chars: 270, textColor: '#fff' }, // Magenta
+        { price: 60000, color: '#D00000', time: '2 hours', chars: 290, textColor: '#fff' }, // Red
+        { price: 80000, color: '#D00000', time: '3 hours', chars: 310, textColor: '#fff' },
+        { price: 100000, color: '#D00000', time: '4 hours', chars: 330, textColor: '#fff' },
+        { price: 150000, color: '#D00000', time: '5 hours', chars: 350, textColor: '#fff' },
+        { price: 200000, color: '#D00000', time: '5 hours', chars: 350, textColor: '#fff' }
+    ];
+
+    // DOM Elements
+    const slider = document.getElementById('price-slider');
+    const displayPrice = document.getElementById('display-price');
+    const cardPrice = document.getElementById('card-price');
+    const card = document.getElementById('chat-card');
+    const pinTime = document.getElementById('pin-time');
+    const charCount = document.getElementById('char-count');
+    const msgInput = document.getElementById('msg-input');
+    const rangeFill = document.getElementById('range-fill');
+    
+    // Helper to format currency
+    const formatCurrency = (val) => {
+        return val.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    // Update Function
+    const updateUI = (index) => {
+        const tier = tiers[index];
+        
+        // Update Prices
+        displayPrice.textContent = formatCurrency(tier.price);
+        cardPrice.textContent = `NGN ${formatCurrency(tier.price)}`;
+        
+        // Update Colors
+        card.style.backgroundColor = tier.color;
+        
+        // Adjust text color based on background brightness for readability
+        const elementsToColor = card.querySelectorAll('.username, .price-tag, .message-input');
+        card.style.color = tier.textColor;
+        msgInput.style.color = tier.textColor;
+        msgInput.style.borderColor = tier.textColor === '#fff' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.2)';
+        msgInput.setAttribute('placeholder', 'Your amount and message will be public...');
+        
+        // Update Placeholder style via CSS injection would be complex, simpler to just rely on opacity
+        // Update Pin Time
+        pinTime.textContent = tier.time;
+        
+        // Update Character Limit
+        msgInput.setAttribute('maxlength', tier.chars);
+        const currentLength = msgInput.value.length;
+        charCount.textContent = `${currentLength}/${tier.chars}`;
+
+        // Update Range Fill Width
+        const percentage = (index / (tiers.length - 1)) * 100;
+        rangeFill.style.width = `${percentage}%`;
+    };
+
+    // Slider Event Listener
+    slider.addEventListener('input', (e) => {
+        updateUI(e.target.value);
     });
-  }
-});
-  </script>
-    
-    <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/game2/service-worker.js')
-    .then((r) => console.log(`Service Worker Registered: ${r}`))
-    .catch((r) => console.log(`Service Worker Failed: ${r}`));
-    
-}
-    </script>
+
+    // Input Character Counter Listener
+    msgInput.addEventListener('input', (e) => {
+        const index = slider.value;
+        const maxChars = tiers[index].chars;
+        charCount.textContent = `${e.target.value.length}/${maxChars}`;
+    });
+
+    // Initialize
+    updateUI(0);
+
+</script>
+
 </body>
-</html>
+  </html>
